@@ -8,7 +8,7 @@ All the lua functions I don't want to write twice.
 
 Note that this library is useless outside of Neovim since it requires Neovim functions. It should be usable with any recent version of Neovim though.
 
-At the moment, it is very much in pre-alpha :smile: Expect changes to the way some functions are structured. I'm hoping to finish some document generators to provide better documentation for people to use and consume and then at some point we'll stabilize on a few more stable APIs.
+At the moment, it is very much in pre-alpha :smile: Expect changes to the way some functions are structured. I'm hoping to finish some document generators to provide better documentation for people to use and consume. At some point we'll stabilize on a few more stable APIs.
 
 ## Installation
 
@@ -28,7 +28,7 @@ Plug 'nvim-lua/plenary.nvim'
 
 ### plenary.job
 
-A Lua module to interactive with system processes. Pass in your `command`, the desired `args`, `env` and `cwd`.
+A Lua module to interact with system processes. Pass in your `command`, the desired `args`, `env` and `cwd`.
 Define optional callbacks for `on_stdout`, `on_stderr` and `on_exit` and `start` your Job.
 
 Note: Each job has an empty environment.
@@ -56,14 +56,14 @@ A Lua module that implements a bunch of the things from `pathlib` from Python, s
 
 `plenery.scandir` is fast recursive file operations. It is similar to unix `find` or `fd` in that it can do recursive scan over a given directory, or a set of directories.
 
-It offers a wide range of opts for limiting the depth, show hidden and more. `plenary.scan_dir` can be ran synchronously and asynchronously and offers `on_insert(file, typ)` and `on_exit(files)` callbacks. `on_insert(file, typ)` is available for both while `on_exit(files)` is only available for async.
+It offers a wide range of opts for limiting the depth, show hidden and more. `plenary.scan_dir` can be run synchronously or asynchronously. It offers `on_insert(file, typ)` and `on_exit(files)` callbacks. `on_insert(file, typ)` is available for both synchronous or asynchronous calls while `on_exit(files)` is only available for asynchronous calls.
 
 ```lua
 local scan = require'plenary.scandir`
 scan.scan_dir('.', { hidden = true, depth = 2 })
 ```
 
-This module also offers `ls -la` sync and async functions that will return a formated string for all files in the directory.
+This module also offers `ls -la` sync and async functions that will return a formatted string for all files in the directory.
 Why? Just for fun
 
 ### plenary.context_manager
@@ -104,7 +104,7 @@ the pattern `*_spec.lua` and execute them in parallel in separate neovim instanc
 
 The second argument is an optional init.vim to specify so that you can make reproducible tests!
 
-The exit code is 0 when success and 1 when fail, so you can use it easily in a `Makefile`!
+The exit code is 0 when the test(s) have passed and 1 when it has failed, so you can use it easily in a `Makefile`!
 
 
 NOTE:
@@ -119,20 +119,19 @@ So far, the only supported busted items are:
 - `clear`
 - `assert.*` etc. (from luassert, which is bundled)
 
-OTHER NOTE:
+OTHER NOTES:
 
-We used to support `luaunit` and original `busted` but it turns out it was way too hard and not worthwhile
-for the difficulty of getting them setup, particularly on other platforms or in CI. Now, we have a dep free
-(or at least, no other installation steps necessary) `busted` implementation that can be used more easily.
+We used to support `luaunit` and original `busted` but it turns out it was way too hard and not worthwhile. Getting them set up, particularly on other platforms or in CI proved to be too difficult . Now, we have a dependency free
+(or at least, no other installation steps necessary) `busted` implementation that can be more easily used.
 
-Please take a look at the new APIs and make any issues for things that aren't clear. I am happy to fix them
-and make it work well :)
+Please take a look at the new APIs and open an issue if things don't work as expected. I am happy to fix them. :)
 
 OTHER OTHER NOTE:
 Take a look at some test examples [here](TESTS_README.md).
 
 #### Colors
-To have "Success" in green and "Failed" in red, you need [nvim-terminal.lua](https://github.com/norcalli/nvim-terminal.lua).
+To have "Success" in green and "Failed" in red, you will need [nvim-terminal.lua](https://github.com/norcalli/nvim-terminal.lua).
+
 In order for it to work, make sure to run the setup function in your config.
 For `init.vim`:
 ```vim
@@ -253,7 +252,7 @@ If you're having trouble / things are hanging / other problems:
 $ export DEBUG_PLENARY=true
 ```
 
-This will enable debuggin for the plugin.
+This will enable debug messages for the plugin.
 
 ### plenary.neorocks
 
